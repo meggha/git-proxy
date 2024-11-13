@@ -96,5 +96,7 @@
   "urlShortener": "",
   "contactEmail": "",
   "csrfProtection": true,
-  "plugins": []
+  "plugins": [
+    "./plugins/git-proxy-plugin-samples/index.js"
+  ]
 }
