@@ -13,7 +13,19 @@ function checkForVulnerabilities(diff) {
 }
 
 function checkLicenses(diff) {
-  return diff.includes("GPL") ? ["GPL licensed code detected"] : [];
+  const licensePatterns = [
+    { pattern: /GPL/, message: "GPL licensed code detected" },
+    { pattern: /LGPL/, message: "LGPL licensed code detected" },
+    { pattern: /AGPL/, message: "AGPL licensed code detected" },
+    { pattern: /MPL/, message: "Mozilla Public License (MPL) code detected" },
+    { pattern: /EPL/, message: "Eclipse Public License (EPL) code detected" },
+    { pattern: /CDDL/, message: "Common Development and Distribution License (CDDL) code detected" },
+    { pattern: /Apache License/, message: "Apache licensed code detected" },
+    { pattern: /MIT License/, message: "MIT licensed code detected" }
+  ];
+  return licensePatterns
+    .filter(l => l.pattern.test(diff))
+    .map(l => l.message);
 }
 
 function lintAndAnalyze(diff) {
