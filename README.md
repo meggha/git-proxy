@@ -119,3 +119,4 @@ Join our [fortnightly Zoom meeting](https://zoom.us/j/97235277537?pwd=aDJsaE8zcD
 Otherwise, if you have a deeper query or require more support, please [raise an issue](https://github.com/finos/git-proxy/issues). 
 
 [More Information](https://github.com/finos/git-proxy/discussions/754)
+[Commits](https://github.com/meggha/git-proxy)
