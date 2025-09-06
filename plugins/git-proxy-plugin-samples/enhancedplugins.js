@@ -1,9 +1,35 @@
 import { PushActionPlugin } from '@finos/git-proxy/plugin';
 import { Step } from '@finos/git-proxy/proxy/actions';
 
+function checkForVulnerabilities(diff) {
+  const issues = [];
+  if (diff.includes("exec")) {
+    issues.push("Use of exec() detected");
+  }
+  if (diff.includes("eval")) {
+    issues.push("Use of eval() detected");
+  }
+  return issues;
+}
+
+function checkLicenses(diff) {
+  return diff.includes("GPL") ? ["GPL licensed code detected"] : [];
+}
+
+function lintAndAnalyze(diff) {
+  const issues = [];
+  if (/console\.log/.test(diff)) {
+    issues.push("console.log found, remove debug statements");
+  }
+  if (/\/\/|\/\*[\s\S]*?\*\//.test(diff)) {
+    issues.push("Comment found, consider removing unnecessary comments");
+  }
+  return issues;
+}
+
 class SensitiveDataDetectionPlugin extends PushActionPlugin {
     execute(action) {
-        const sensitivePatterns = [/API_KEY=\w+/, /SSN:\d{3}-\d{2}-\d{4}/]; // etc.
+        const sensitivePatterns = [/API_KEY=\w+/, /SSN:\d{3}-\d{2}-\d{4}/];
         this.results = [];
         sensitivePatterns.forEach(pattern => {
             if (pattern.test(action.diffContent)) {
@@ -16,7 +42,7 @@ class SensitiveDataDetectionPlugin extends PushActionPlugin {
 
 class StaticSecurityVulnerabilityPlugin extends PushActionPlugin {
     async execute(action) {
-        const vulnerabilities = checkForVulnerabilities(action.diffContent); // Hypothetical function
+        const vulnerabilities = checkForVulnerabilities(action.diffContent); 
         return vulnerabilities.length > 0
             ? { success: false, issues: vulnerabilities }
             : { success: true, message: 'No security vulnerabilities detected.' };
@@ -46,7 +72,7 @@ class NonStandardCryptographyPlugin extends PushActionPlugin {
 
 class LicenseCompliancePlugin extends PushActionPlugin {
     async execute(action) {
-        const licenseIssues = checkLicenses(action.diffContent); // Hypothetical function
+        const licenseIssues = checkLicenses(action.diffContent); 
         return licenseIssues.length > 0
             ? { success: false, issues: licenseIssues }
             : { success: true };
@@ -63,7 +89,7 @@ class MaliciousCodeDetectionPlugin extends PushActionPlugin {
 
 class SecurityConfigurationPlugin extends PushActionPlugin {
     execute(action) {
-        const configPatterns = [/FROM ubuntu:/, /public-read/]; // Patterns for insecure configs
+        const configPatterns = [/FROM ubuntu:/, /public-read/]; 
         const issues = configPatterns.filter(pattern => pattern.test(action.diffContent));
         return issues.length ? { success: false, issues } : { success: true };
     }
@@ -79,7 +105,7 @@ class AIModelCompliancePlugin extends PushActionPlugin {
 
 class CodeQualityPlugin extends PushActionPlugin {
     async execute(action) {
-        const qualityIssues = lintAndAnalyze(action.diffContent); // Hypothetical function
+        const qualityIssues = lintAndAnalyze(action.diffContent); 
         return qualityIssues.length > 0
             ? { success: false, issues: qualityIssues }
             : { success: true };

@@ -8,7 +8,7 @@ module.exports = {
       `:${UI_PORT}`,
       `:${PROXY_HTTP_PORT}`,
     );
-    return config.getDomains().proxy ?? defaultURL;
+    //return config.getDomains().proxy ?? defaultURL;
   },
   getServiceUIURL: (req) => {
     const defaultURL = `${req.protocol}://${req.headers.host}`.replace(

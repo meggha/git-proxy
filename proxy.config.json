@@ -1,3 +1,4 @@
+
 {
   "proxyUrl": "https://github.com",
   "cookieSecret": "cookie secret",
@@ -92,7 +93,6 @@
       }
     ]
   },
-  "domains": {},
   "privateOrganizations": [],
   "urlShortener": "",
   "contactEmail": "",
@@ -101,3 +101,4 @@
     "./plugins/git-proxy-plugin-samples/index.js"
   ]
 }
+
