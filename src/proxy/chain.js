@@ -24,19 +24,26 @@ const executeChain = async (req) => {
   try {
     action = await proc.pre.parseAction(req);
     const actions = await getChain(action);
-    for (const i in actions) {
-      if (!i) continue;
-      const fn = actions[i];
+    for (const fn of actions) {
+  if (!fn) {
+    console.warn("Skipping invalid chain item:", fn);
+    continue;
+  }
 
-      action = await fn(req, action);
-      if (!action.continue()) {
-        return action;
-      }
+  if (typeof fn !== 'function') {
+    throw new TypeError(`Item in chain is not a function: ${fn}`);
+  }
 
-      if (action.allowPush) {
-        return action;
-      }
-    }
+  action = await fn(req, action);
+
+  if (!action.continue()) {
+    return action;
+  }
+
+  if (action.allowPush) {
+    return action;
+  }
+}
   } finally {
     await proc.push.audit(req, action);
   }

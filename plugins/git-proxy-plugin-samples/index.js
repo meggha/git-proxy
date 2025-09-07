@@ -23,10 +23,18 @@ class RunOnPullPlugin extends PullActionPlugin {
 
 // Default exports are supported and will be loaded by the plugin loader
 //export default new RunOnPullPlugin();
-export default {
+export default [
   hello,
   logRequest,
   detectData,
-  sensitiveDataDetectionPlugin, staticSecurityVulnerabilityPlugin,  complianceCheckPlugin,  nonStandardCryptographyPlugin,  licenseCompliancePlugin, 
-  maliciousCodeDetectionPlugin,  securityConfigurationPlugin, aiModelCompliancePlugin,  codeQualityPlugin,  documentationAuditPlugin
-};
+  sensitiveDataDetectionPlugin,
+  staticSecurityVulnerabilityPlugin,
+  complianceCheckPlugin,
+  nonStandardCryptographyPlugin,
+  licenseCompliancePlugin,
+  maliciousCodeDetectionPlugin,
+  securityConfigurationPlugin,
+  aiModelCompliancePlugin,
+  codeQualityPlugin,
+  documentationAuditPlugin
+];
